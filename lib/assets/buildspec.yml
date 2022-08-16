@@ -1,0 +1,32 @@
+version: 0.2
+
+phases:
+    install:
+        runtime-versions:
+            nodejs: 16
+        # ビルドに必要な処理。コンテナの環境の更新等
+        commands:
+            - echo "*******Start Install*******"
+    pre_build:
+        # yarn install等はここでやる
+        commands:
+            - echo "*******Start Pre Build*******"
+            # - yarn install --frozen-lockfile
+            # - yarn lint
+            - echo bucket ${S3_BUCKET_NAME}
+            - aws s3 rm s3://${S3_BUCKET_NAME} --recursive
+    build:
+        # yarn build等はここでやる
+        commands:
+            - echo "*******Start Build*******"
+            # - yarn generate
+    post_build:
+        # デプロイ先のクリア等
+        commands:
+            - echo "*******Start Post Build*******"
+            - echo bucket ${CLOUDFRONT_DISTRIBUTION_ID}
+            - aws cloudfront create-invalidation --distribution-id ${CLOUDFRONT_DISTRIBUTION_ID} --paths "/*"
+artifacts:
+    base-directory: dist
+    files:
+        - '**/*'
