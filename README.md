@@ -29,12 +29,12 @@ for (const stage of stages) {
 
 CodeCommitリポジトリを生成するためのテンプレートです。
 
-## cicd-stack.ts
+## cicd-front-stack.ts
 
 CI/CD を構築するためのテンプレートです。
 現状、front-stack.tsで構築したフロント向けの構成であり、バックエンド向け等、パターンを増やしていく予定。
 
-## s3-stack.ts
+## front-stack.ts
 
 S3 + CloudFrontでホスティングするための構成です。  
 S3はパブリックアクセスをブロックし、CloudFront経由でのアクセスのみとしています。  
